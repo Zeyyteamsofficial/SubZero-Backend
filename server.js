@@ -7,7 +7,6 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/chat", async (req, res) => {
-
   const userMessage = req.body.message;
 
   const response = await fetch(
@@ -16,7 +15,7 @@ app.post("/chat", async (req, res) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": Bearer ${process.env.GROQ_API_KEY}
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
@@ -31,11 +30,10 @@ app.post("/chat", async (req, res) => {
   );
 
   const data = await response.json();
-
   res.json(data);
-
 });
 
-app.listen(3000, () => {
-  console.log("server jalan");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`server jalan di port ${PORT}`);
 });
